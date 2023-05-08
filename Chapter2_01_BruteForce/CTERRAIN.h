@@ -21,18 +21,21 @@ protected:
 public:
     int m_iSize;	//the size of the heightmap, must be a power of two
 
-
-    virtual void Render( void )= 0;
-
-    bool LoadHeightMap( char* szFilename, int iSize );
-    bool SaveHeightMap( char* szFilename );
+    bool LoadHeightMap(char* szFilename, int iSize);
+    bool SaveHeightMap(char* szFilename );
     bool UnloadHeightMap( void );
+
+    inline int GetSegment()
+    {
+        return m_iSize-1;
+    }
 
     //--------------------------------------------------------------
     // Description:		Get the number of vertices being sent to the API every frame
     //--------------------------------------------------------------
     inline int GetNumVertsPerFrame( void )
-    {	return m_iVertsPerFrame;	}
+    {	return m_iVertsPerFrame;
+    }
 
     //--------------------------------------------------------------
     // Description:		Get the number of triangles being rendered every frame
@@ -61,7 +64,9 @@ public:
     // Return Value:	An float value: the true height at the given point
     //--------------------------------------------------------------
     inline unsigned char GetTrueHeightAtPoint( int iX, int iZ )
-    {	return ( m_heightData.m_ucpData[( iZ*m_iSize )+iX] );	}
+    {
+        return ( m_heightData.m_ucpData[( iZ*m_iSize )+iX] );
+    }
 
     //--------------------------------------------------------------
     // Description:		Retrieve the scaled height at a given point

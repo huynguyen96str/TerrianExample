@@ -1,8 +1,7 @@
 #include "CTERRAIN.h"
 
-void CTERRAIN::Render(){
 
-}
+
 
 bool CTERRAIN::LoadHeightMap(char * szFilename, int iSize)
 {
