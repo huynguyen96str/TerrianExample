@@ -1,6 +1,32 @@
-#include "CTERRAIN.h"
+#include "BruteForceTerrain.h"
 
-bool CTERRAIN::LoadHeightMap(char * szFilename, int iSize)
+BruteForceTerrain::BruteForceTerrain(QOpenGLFunctions_3_3_Core *m_glFuns, int TerrainSize): TerrainBase(m_glFuns, TerrainSize,TerrainSize)
+{
+    CreateBuffer();
+}
+///  m_camera = Camera(QVector3D(0.0f, 0.0f, -23.0f));
+/// QString fileheightmaps = "D:\\ProjectCDC\\TerrianExample\\Chapter2_02_FaultFormationAlg\\height128.RAW";
+/// m_terrain= new BruteForceTerrain(CurrentContex,fileheightmaps);
+BruteForceTerrain::BruteForceTerrain(QOpenGLFunctions_3_3_Core *m_glFuns, QString fileHeightmaps): TerrainBase(m_glFuns)
+{
+    QByteArray ba = fileHeightmaps.toLocal8Bit();
+    LoadHeightMap( ba.data(), 128 );
+    SetHeightScale( 0.25f );
+    int depth = GetSegment();
+    SetSizeTerrian(depth,depth);
+    // set height các vertices dựa vào file heightmap
+    float height=0.0f;
+    for (int z = 0; z < depth; z++) {
+        for (int x = 0; x < depth; x++) {
+            height= GetScaledHeightAtPoint( x, z );
+            SetHeight(z,x,height);
+        }
+    }
+    // Tạo buffer
+    CreateBuffer();
+}
+
+bool BruteForceTerrain::LoadHeightMap(char *szFilename, int iSize)
 {
     FILE* pFile;
 
@@ -42,7 +68,7 @@ bool CTERRAIN::LoadHeightMap(char * szFilename, int iSize)
     return true;
 }
 
-bool CTERRAIN::SaveHeightMap(char *szFilename)
+bool BruteForceTerrain::SaveHeightMap(char *szFilename)
 {
     FILE* pFile;
 
@@ -74,7 +100,7 @@ bool CTERRAIN::SaveHeightMap(char *szFilename)
     return true;
 }
 
-bool CTERRAIN::UnloadHeightMap()
+bool BruteForceTerrain::UnloadHeightMap()
 {
     //check to see if the data has been set
     if( m_heightData.m_ucpData )
@@ -87,6 +113,7 @@ bool CTERRAIN::UnloadHeightMap()
     }
 
     //the height map has been unloaded
-     qDebug()<< "LOG_SUCCESS, Successfully unloaded the height map" ;
+    qDebug()<< "LOG_SUCCESS, Successfully unloaded the height map" ;
     return true;
 }
+

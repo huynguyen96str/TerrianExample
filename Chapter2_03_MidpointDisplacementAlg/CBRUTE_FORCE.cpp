@@ -33,10 +33,10 @@ void CBRUTE_FORCE::initial()
         for (int x = 0; x < m_width; x++) {
             Vertices.push_back(x);
             if(m_isLoadHeightMaps){
-                 Vertices.push_back(m_cterrain.GetScaledHeightAtPoint( x, z ));
-                 // Màu 3 kênh đều như nhau: ucColor= m_cterrain.GetTrueHeightAtPoint( x, z )
+                Vertices.push_back(m_cterrain.GetScaledHeightAtPoint( x, z ));
+                // Màu 3 kênh đều như nhau: ucColor= m_cterrain.GetTrueHeightAtPoint( x, z )
             }else{
-               Vertices.push_back(0);
+                Vertices.push_back(0);
             }
             Vertices.push_back(z);
             //set index

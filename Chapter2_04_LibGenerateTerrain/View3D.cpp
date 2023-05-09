@@ -4,7 +4,7 @@ View3D::View3D(QWidget* parent) : QOpenGLWidget(parent)
     lastPos = QPoint(0, 0);
     perFrame = 100;// delta time / frame
     setFocusPolicy(Qt::StrongFocus);
-    m_camera = Camera(QVector3D(0.f, 1.0f, -2.0f));
+    m_camera = Camera(QVector3D(0.0f, 10.0f, -50.0f));
     m_timer.setInterval(perFrame);
     connect(&m_timer, SIGNAL(timeout()), this, SLOT(on_TimeOut()));
     m_timer.start();
@@ -13,13 +13,9 @@ void View3D::initializeGL() {
     initializeOpenGLFunctions();
     CurrentContex = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_3_3_Core>();
     ShaderProgram::Load(shaderProgram,":/Shaders/Resources/obj.vert", ":/Shaders/Resources/obj.frag");
-    QString fileheightmaps = "D:\\ProjectCDC\\TerrianExample\\Chapter2_02_FaultFormationAlg\\height128.RAW";
-    int size = 256;
-    float minHeight = -50.0f;
-    float maxHeight = 50.0f;
-    float filter = 0.2f;
-    int interations =50;// 100;
-
+    int size = 4;
+    float minHeight = 0.0f;
+    float maxHeight = 1.0f;
     float roughness = 1.5f;
     m_terrain= new MidpointDispTerrain(CurrentContex,size,roughness,minHeight,maxHeight);
 }

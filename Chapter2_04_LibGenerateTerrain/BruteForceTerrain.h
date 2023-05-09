@@ -1,23 +1,23 @@
-#ifndef CTERRAIN_H
-#define CTERRAIN_H
-#include <stdlib.h>
-#include <QDebug>
+#ifndef BRUTEFORCETERRAIN_H
+#define BRUTEFORCETERRAIN_H
+#include "TerrainBase.h"
+
 struct SHEIGHT_DATA
 {
     unsigned char* m_ucpData=nullptr;	//the height data
     int m_iSize;				//the height size (must be a power of 2)
 };
-
-class CTERRAIN
+class BruteForceTerrain:public TerrainBase
 {
-protected:
+public:
+    BruteForceTerrain(QOpenGLFunctions_3_3_Core* m_glFuns, int TerrainSize);
+    BruteForceTerrain(QOpenGLFunctions_3_3_Core* m_glFuns, QString fileHeightmaps);
+private:
     SHEIGHT_DATA m_heightData;	//the height data
     float m_fHeightScale;		//scaling variable
     int m_iVertsPerFrame;		//stat variables
     int m_iTrisPerFrame;
-public:
     int m_iSize;	//the size of the heightmap, must be a power of two
-
     bool LoadHeightMap(char* szFilename, int iSize);
     bool SaveHeightMap(char* szFilename );
     bool UnloadHeightMap( void );
@@ -26,12 +26,12 @@ public:
     {
         return m_iSize-1;
     }
-
     //--------------------------------------------------------------
     // Description:		Get the number of vertices being sent to the API every frame
     //--------------------------------------------------------------
     inline int GetNumVertsPerFrame( void )
-    {	return m_iVertsPerFrame;
+    {
+        return m_iVertsPerFrame;
     }
 
     //--------------------------------------------------------------
@@ -45,7 +45,9 @@ public:
     // Arguments:		-fScale: how much to scale the terrain
     //--------------------------------------------------------------
     inline void SetHeightScale( float fScale )
-    {	m_fHeightScale= fScale;	}
+    {
+        m_fHeightScale= fScale;
+    }
 
     //--------------------------------------------------------------
     // Description:		Set the true height value at the given point
@@ -53,7 +55,9 @@ public:
     //					-iX, iZ: which height value to retrieve
     //--------------------------------------------------------------
     inline void SetHeightAtPoint( unsigned char ucHeight, int iX, int iZ)
-    {	m_heightData.m_ucpData[( iZ*m_iSize )+iX]= ucHeight;	}
+    {
+        m_heightData.m_ucpData[( iZ*m_iSize )+iX]= ucHeight;
+    }
 
     //--------------------------------------------------------------
     // Description:		A function to get the true height value (0-255) at a point
@@ -71,12 +75,9 @@ public:
     // Return Value:	A float value: the scaled height at the given point.
     //--------------------------------------------------------------
     inline float GetScaledHeightAtPoint( int iX, int iZ )
-    {	return ( ( float )( m_heightData.m_ucpData[( iZ*m_iSize )+iX] )*m_fHeightScale );	}
-
-    CTERRAIN( void )
-    {	}
-    ~CTERRAIN( void )
-    {	}
+    {
+        return ( ( float )( m_heightData.m_ucpData[( iZ*m_iSize )+iX] )*m_fHeightScale );
+    }
 };
 
-#endif // CTERRAIN_H
+#endif // BRUTEFORCETERRAIN_H

@@ -15,7 +15,8 @@
 
 #include "Opengl/ShaderProgram.h"
 #include "Opengl/Buffer.h"
-#include "CBRUTE_FORCE.h"
+
+#include "BruteForceTerrain.h"
 #include "FaultFormationTerrain.h"
 #include "MidpointDispTerrain.h"
 class View3D: public QOpenGLWidget,public QOpenGLFunctions_3_3_Core {
@@ -45,7 +46,7 @@ private:
     float m_near =0.1f;
     float m_far=10000.0f;
     QOpenGLShaderProgram shaderProgram;
-   // Buffer* m_buffer;
+    // Buffer* m_buffer;
     MidpointDispTerrain* m_terrain;
 
 };

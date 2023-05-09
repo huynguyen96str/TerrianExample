@@ -14,7 +14,7 @@ void View3D::initializeGL() {
     CurrentContex = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_3_3_Core>();
 
     ShaderProgram::Load(shaderProgram,":/Shaders/Resources/obj.vert", ":/Shaders/Resources/obj.frag");
-    QString fileheightmaps = "D:\\ProjectCDC\\TerrianExample\\Chapter2_01\\height128.RAW";
+     QString fileheightmaps = "D:\\ProjectCDC\\TerrianExample\\Chapter2_02_FaultFormationAlg\\height128.RAW";
     m_terrain= new CBRUTE_FORCE(CurrentContex,fileheightmaps);
 }
 void View3D::resizeGL(int w, int h) {

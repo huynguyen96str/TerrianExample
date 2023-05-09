@@ -9,8 +9,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    CBRUTE_FORCE.cpp \
-    CTERRAIN.cpp \
+    BruteForceTerrain.cpp \
     Core/GlobalMath.cpp \
     Core/Point3D.cpp \
     FaultFormationTerrain.cpp \
@@ -20,13 +19,13 @@ SOURCES += \
     Opengl/GlobalOpengl.cpp \
     Opengl/ShaderProgram.cpp \
     Opengl/Texture.cpp \
+    TerrainBase.cpp \
     View3D.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
-    CBRUTE_FORCE.h \
-    CTERRAIN.h \
+    BruteForceTerrain.h \
     Core/GlobalMath.h \
     Core/Point3D.h \
     FaultFormationTerrain.h \
@@ -36,6 +35,7 @@ HEADERS += \
     Opengl/GlobalOpengl.h \
     Opengl/ShaderProgram.h \
     Opengl/Texture.h \
+    TerrainBase.h \
     View3D.h \
     mainwindow.h
 
