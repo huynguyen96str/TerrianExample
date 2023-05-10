@@ -9,3 +9,5 @@ void Texture::SetToShader(QOpenGLShaderProgram& shader,std::string uniformValue,
     shader.setUniformValue(uniformValue.c_str(),GL_TEXTURE0 + portNum);
     m_texture->bind(portNum);
 }
+
+

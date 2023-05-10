@@ -3,4 +3,37 @@
         <file>Resources/obj.frag</file>
         <file>Resources/obj.vert</file>
     </qresource>
+    <qresource prefix="/textures">
+        <file>Resources/textures/clover 1.png</file>
+        <file>Resources/textures/clover.jpg</file>
+        <file>Resources/textures/grass1.jpg</file>
+        <file>Resources/textures/IMGP5480_seamless.jpg</file>
+        <file>Resources/textures/IMGP5482_seamless.jpg</file>
+        <file>Resources/textures/IMGP5487_seamless.jpg</file>
+        <file>Resources/textures/IMGP5493_seamless_1.jpg</file>
+        <file>Resources/textures/IMGP5493_seamless_2.jpg</file>
+        <file>Resources/textures/IMGP5497_seamless.jpg</file>
+        <file>Resources/textures/IMGP5498_seamless.jpg</file>
+        <file>Resources/textures/IMGP5505_seamless.jpg</file>
+        <file>Resources/textures/IMGP5511_seamless.jpg</file>
+        <file>Resources/textures/IMGP5514_seamless_1.jpg</file>
+        <file>Resources/textures/IMGP5514_seamless_2.jpg</file>
+        <file>Resources/textures/IMGP5525_seamless.jpg</file>
+        <file>Resources/textures/IMGP5525_seamless_normal_map.jpg</file>
+        <file>Resources/textures/IMGP5539_almost_seamless.jpg</file>
+        <file>Resources/textures/IMGP5546_seamless.jpg</file>
+        <file>Resources/textures/large_sandstone_blocks_diff_4k.jpg</file>
+        <file>Resources/textures/medieval_blocks_05_diff_4k.jpg</file>
+        <file>Resources/textures/rock_04_diff_1k.jpg</file>
+        <file>Resources/textures/rock_boulder_cracked_diff_1k.jpg</file>
+        <file>Resources/textures/rock01.jpg</file>
+        <file>Resources/textures/rock02.jpg</file>
+        <file>Resources/textures/rock02_2.jpg</file>
+        <file>Resources/textures/rock03.jpg</file>
+        <file>Resources/textures/Rock6.png</file>
+        <file>Resources/textures/tilable-IMG_0044-verydark.png</file>
+        <file>Resources/textures/tileable_grass_00.png</file>
+        <file>Resources/textures/water.png</file>
+        <file>Resources/textures/grass_1.png</file>
+    </qresource>
 </RCC>

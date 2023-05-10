@@ -12,15 +12,18 @@ public:
     void SetSizeTerrian(int depthcount, int widthcount);
     ~TerrainBase();
     void Unload();
-     void Render(DrawType type, bool isWireFrame);
+    void Render(DrawType type, bool isWireFrame);
+    void SetTextureScale(int value);
 private:
     Buffer* m_buffer=nullptr;
     std::vector<float> m_vertices;
     std::vector<unsigned int> m_indices;
+      std::vector<float> m_textures;
     int m_depth;
     int m_width;
     QOpenGLFunctions_3_3_Core* m_glFuns;
     void InitVerticesAndIndices();
+    int m_textureScale =1;
 protected:
     void CreateBuffer();
     void Normalize();

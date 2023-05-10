@@ -4,20 +4,23 @@ View3D::View3D(QWidget* parent) : QOpenGLWidget(parent)
     lastPos = QPoint(0, 0);
     perFrame = 100;// delta time / frame
     setFocusPolicy(Qt::StrongFocus);
-    m_camera = Camera(QVector3D(0.0f, 10.0f, -50.0f));
+    m_camera = Camera(QVector3D(0.0f, 5.0f, -5.0f));
     m_timer.setInterval(perFrame);
     connect(&m_timer, SIGNAL(timeout()), this, SLOT(on_TimeOut()));
     m_timer.start();
 }
+
 void View3D::initializeGL() {
     initializeOpenGLFunctions();
     CurrentContex = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_3_3_Core>();
     ShaderProgram::Load(shaderProgram,":/Shaders/Resources/obj.vert", ":/Shaders/Resources/obj.frag");
-    int size = 4;
-    float minHeight = 0.0f;
-    float maxHeight = 1.0f;
+    int size = 128;
+    float minHeight = -30.0f;
+    float maxHeight = 30.f;
     float roughness = 1.5f;
+    m_texture= new Texture(":/textures/Resources/textures/grass_1.png");
     m_terrain= new MidpointDispTerrain(CurrentContex,size,roughness,minHeight,maxHeight);
+   // m_terrain->SetTextureScale(10);
 }
 void View3D::resizeGL(int w, int h) {
     glViewport(0, 0, (GLsizei)(w), (GLsizei)(h));
@@ -52,6 +55,7 @@ void View3D::wheelEvent(QWheelEvent* event) {
     m_camera.ProcessMouseScroll(event->angleDelta().y() / 120);
     update();
 }
+
 void View3D::keyPressEvent(QKeyEvent* event) {
     float detatime2 = 2.5 * perFrame / 1000;
     switch (event->key()) {
@@ -91,6 +95,6 @@ void View3D::paintGL()
     shaderProgram.setUniformValue("projection", m_projection);
     shaderProgram.setUniformValue("view", m_view);
     shaderProgram.setUniformValue("model", m_model);
-
-    m_terrain->Render(DrawType::Triangles, true);
+    m_texture->SetToShader(shaderProgram,"texturew");
+    m_terrain->Render(DrawType::Triangles, false);
 }

@@ -19,6 +19,8 @@
 #include "BruteForceTerrain.h"
 #include "FaultFormationTerrain.h"
 #include "MidpointDispTerrain.h"
+#include "Opengl/Texture.h"
+
 class View3D: public QOpenGLWidget,public QOpenGLFunctions_3_3_Core {
     Q_OBJECT
 public:
@@ -48,7 +50,7 @@ private:
     QOpenGLShaderProgram shaderProgram;
     // Buffer* m_buffer;
     MidpointDispTerrain* m_terrain;
-
+Texture* m_texture;
 };
 
 #endif // VIEW3D_H

@@ -35,6 +35,25 @@ void TerrainBase::Render(DrawType type, bool isWireFrame)
     if(m_buffer!=nullptr) m_buffer->Render(type, isWireFrame);
 }
 
+void TerrainBase::SetTextureScale(int value)
+{
+   if(value>0){
+       m_textureScale = value;
+       delete  m_buffer;
+       m_textures.clear();
+       for (int z = 0; z < m_depth; z++) {
+           for (int x = 0; x < m_width; x++) {
+               // texture
+               float textureZ = m_textureScale*(float)z/ m_depth;
+               float textureX = m_textureScale*(float)x/ m_width;
+               m_textures.push_back(textureZ);
+               m_textures.push_back(textureX);
+           }
+       }
+       CreateBuffer();
+   }
+}
+
 size_t TerrainBase::GetIndex(int rowIndex, int colIndex)
 {
     int m_rows = m_depth;
@@ -89,6 +108,11 @@ void TerrainBase::InitVerticesAndIndices()
                 m_indices[Index++] = IndexTopRight;
                 m_indices[Index++] = IndexBottomRight;
             }
+            // texture
+            float textureZ = m_textureScale*(float)z/ m_depth;
+            float textureX = m_textureScale*(float)x/ m_width;
+            m_textures.push_back(textureZ);
+            m_textures.push_back(textureX);
         }
     }
 }
@@ -98,7 +122,9 @@ void TerrainBase::CreateBuffer()
     m_buffer = new Buffer(m_glFuns);
     m_buffer->FillVBO(VBOType::VertexBuffer, &m_vertices[0],sizeof (m_vertices[0])* m_vertices.size(), FillType::Static_draw);
     m_buffer->FillVBO(VBOType::IndexBuffer, &m_indices[0],sizeof (m_indices[0])* m_indices.size(), FillType::Static_draw);
+    m_buffer->FillVBO(VBOType::TextureBuffer, &m_textures[0],sizeof (m_textures[0])* m_textures.size(), FillType::Static_draw);
     m_buffer->LinkBuffer(0,3, VBOType::VertexBuffer);
+    m_buffer->LinkBuffer(1,2, VBOType::TextureBuffer);
 }
 /// scale the values to a range of 0-255 (because I like things that way)
 void TerrainBase::Normalize()
