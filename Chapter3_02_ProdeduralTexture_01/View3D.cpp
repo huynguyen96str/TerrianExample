@@ -32,13 +32,14 @@ void View3D::initializeGL() {
 //         TextureFilenames.push_back("../Content/textures/tilable-IMG_0044-verydark.png");
 //         TextureFilenames.push_back("../Content/textures/water.png");
 
-  m_textures =new Texture2(":/textures/Resources/textures/IMGP5525_seamless.jpg");
-  m_textures->AddTexture(":/textures/Resources/textures/IMGP5487_seamless.jpg",1);
-  m_textures->AddTexture(":/textures/Resources/textures/tilable-IMG_0044-verydark.png",2);
-  m_textures->AddTexture(":/textures/Resources/textures/water.png",3);
-//  m_texture2=new Texture(":/textures/Resources/textures/IMGP5487_seamless.jpg");
-//  m_texture3=new Texture(":/textures/Resources/textures/tilable-IMG_0044-verydark.png");
-//  m_texture4=new Texture(":/textures/Resources/textures/water.png");
+//  m_textures =new Texture2(":/textures/Resources/textures/IMGP5525_seamless.jpg");
+//  m_textures->AddTexture(":/textures/Resources/textures/IMGP5487_seamless.jpg",1);
+//  m_textures->AddTexture(":/textures/Resources/textures/tilable-IMG_0044-verydark.png",2);
+//  m_textures->AddTexture(":/textures/Resources/textures/water.png",3);
+    m_texture1=new Texture(":/textures/Resources/textures/IMGP5525_seamless.jpg");
+  m_texture2=new Texture(":/textures/Resources/textures/IMGP5487_seamless.jpg");
+  m_texture3=new Texture(":/textures/Resources/textures/tilable-IMG_0044-verydark.png");
+  m_texture4=new Texture(":/textures/Resources/textures/water.png");
 
     int TextureSize = 1024;
     m_terrain= new MidpointDispTerrain(CurrentContex,Size,Roughness,MinHeight, MaxHeight);
@@ -123,26 +124,35 @@ void View3D::paintGL()
 
 
     // Kích hoạt texture và kết nối với texture unit
-    m_textures->SetToShader(CurrentContex,shaderProgram);
-//    m_textures->SetToShader(CurrentContex,shaderProgram,"gTextureHeight1",1);
-//    m_textures->SetToShader(CurrentContex,shaderProgram,"gTextureHeight2",2);
-//    m_textures->SetToShader(CurrentContex,shaderProgram,"gTextureHeight3",3);
-//   shaderProgram.bind();
-//   shaderProgram.setUniformValue("gTextureHeight0",0);
-//   glActiveTexture(GL_TEXTURE0+0);
-//   m_texture1->TextureI()->bind();
+    //m_textures->SetToShader(CurrentContex,shaderProgram);
+    //CurrentContex = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_3_3_Core>()
+    m_texture1->SetToShader(shaderProgram,"gTextureHeight0",0);
+    m_texture2->SetToShader(shaderProgram,"gTextureHeight1",1);
+    m_texture3->SetToShader(shaderProgram,"gTextureHeight2",2);
+    m_texture4->SetToShader(shaderProgram,"gTextureHeight3",3);
 
-//   shaderProgram.setUniformValue("gTextureHeight1",1);
-//   glActiveTexture(GL_TEXTURE0+1);
-//   m_texture2->TextureI()->bind();
 
-//   shaderProgram.setUniformValue("gTextureHeight2",2);
+
+
+// shaderProgram.setUniformValue("gTextureHeight0",0);
+// glActiveTexture(GL_TEXTURE0+0);
+// m_texture1->TextureI()->bind(0);
+
+//  shaderProgram.setUniformValue("gTextureHeight1",1);
+  // glActiveTexture(GL_TEXTURE0+1);
+ //m_texture2->TextureI()->bind(1);
+
+// shaderProgram.setUniformValue("gTextureHeight2",2);
 //   glActiveTexture(GL_TEXTURE0+2);
-//   m_texture3->TextureI()->bind();
+//   m_texture3->TextureI()->bind(2);
 
-//   shaderProgram.setUniformValue("gTextureHeight3",3);
+//shaderProgram.setUniformValue("gTextureHeight3",3);
 //   glActiveTexture(GL_TEXTURE0+3);
-//   m_texture4->TextureI()->bind();
+// m_texture4->TextureI()->bind(3);
 
     m_terrain->Render(DrawType::Triangles, false);
+    m_texture1->TextureI()->release();
+     m_texture2->TextureI()->release();
+      m_texture3->TextureI()->release();
+       m_texture4->TextureI()->release();
 }
