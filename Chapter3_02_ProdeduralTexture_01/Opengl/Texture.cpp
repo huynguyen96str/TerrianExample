@@ -57,17 +57,15 @@ void Texture::SetToShader( QOpenGLShaderProgram & shader, std::string uniformVal
 //        activeShaderProgram.programId = static_cast<GLuint>(programId);
 //        }
 
+//        shader.setUniformValue(uniformValue.c_str(),portNum);
+//        functions->glActiveTexture(GL_TEXTURE0 + portNum);
+//        m_texture->bind(portNum);
         shader.setUniformValue(uniformValue.c_str(),portNum);
-        functions->glActiveTexture(GL_TEXTURE0 + portNum);
+        //functions->glActiveTexture(GL_TEXTURE0 + portNum);
         m_texture->bind(portNum);
     }
     //m_glFuns->glBindTexture(GL_TEXTURE_2D, m_texture->textureId());
 
-}
-
-QOpenGLTexture *Texture::TextureI()
-{
-    return  m_texture;
 }
 
 

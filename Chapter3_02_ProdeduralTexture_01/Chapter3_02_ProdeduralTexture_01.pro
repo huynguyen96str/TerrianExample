@@ -20,7 +20,6 @@ SOURCES += \
     Opengl/ProceduralTexture.cpp \
     Opengl/ShaderProgram.cpp \
     Opengl/Texture.cpp \
-    Opengl/Texture2.cpp \
     TerrainBase.cpp \
     View3D.cpp \
     main.cpp \
@@ -38,7 +37,6 @@ HEADERS += \
     Opengl/ProceduralTexture.h \
     Opengl/ShaderProgram.h \
     Opengl/Texture.h \
-    Opengl/Texture2.h \
     TerrainBase.h \
     View3D.h \
     mainwindow.h

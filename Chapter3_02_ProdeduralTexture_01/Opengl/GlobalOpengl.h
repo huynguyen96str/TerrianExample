@@ -46,4 +46,5 @@ enum class Camera_Movement {
     RIGHT
 };
 
+
 #endif // GLOBALOPENGL_H

@@ -4,7 +4,7 @@ View3D::View3D(QWidget* parent) : QOpenGLWidget(parent)
     lastPos = QPoint(0, 0);
     perFrame = 100;// delta time / frame
     setFocusPolicy(Qt::StrongFocus);
-    m_camera = Camera(QVector3D(0.0f, 200.0f, -120.0f));
+    m_camera = Camera(QVector3D(0.0f, 200.0f, -620.0f));
     m_timer.setInterval(perFrame);
     connect(&m_timer, SIGNAL(timeout()), this, SLOT(on_TimeOut()));
     m_timer.start();
@@ -13,38 +13,22 @@ View3D::View3D(QWidget* parent) : QOpenGLWidget(parent)
 void View3D::initializeGL() {
     initializeOpenGLFunctions();
     CurrentContex = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_3_3_Core>();
-     ShaderProgram::Load(shaderProgram,":/Shaders/Resources/obj.vert", ":/Shaders/Resources/obj.frag");
-    // ShaderProgram::Load(shaderProgram,":/Shaders/Resources/single_tex_terrain.vert", ":/Shaders/Resources/single_tex_terrain.frag");
-    float TextureScale = 4.0f;
+    ShaderProgram::Load(shaderProgram,":/Shaders/Resources/single_tex_terrain.vert", ":/Shaders/Resources/single_tex_terrain.frag");
+    float TextureScale = 10.0f;
     int Size = 512;
     float Roughness = 1.0f;
-    float MinHeight = 0.f;
-    float MaxHeight = 256.f;
+    float MinHeight =0.f;
+    float MaxHeight = 156.0f;
    // Texture single
-
     m_texture= new ProceduralTexture();
-//    m_texture->LoadTile(":/textures/Resources/textures/rock02_2.jpg");
-//    m_texture->LoadTile(":/textures/Resources/textures/rock01.jpg");
-//    m_texture->LoadTile(":/textures/Resources/textures/tilable-IMG_0044-verydark.png");
-//    m_texture->LoadTile(":/textures/Resources/textures/water.png");
-//    TextureFilenames.push_back("../Content/textures/IMGP5525_seamless.jpg");
-//         TextureFilenames.push_back("../Content/textures/IMGP5487_seamless.jpg");
-//         TextureFilenames.push_back("../Content/textures/tilable-IMG_0044-verydark.png");
-//         TextureFilenames.push_back("../Content/textures/water.png");
-
-//  m_textures =new Texture2(":/textures/Resources/textures/IMGP5525_seamless.jpg");
-//  m_textures->AddTexture(":/textures/Resources/textures/IMGP5487_seamless.jpg",1);
-//  m_textures->AddTexture(":/textures/Resources/textures/tilable-IMG_0044-verydark.png",2);
-//  m_textures->AddTexture(":/textures/Resources/textures/water.png",3);
-    m_texture1=new Texture(":/textures/Resources/textures/IMGP5525_seamless.jpg");
-  m_texture2=new Texture(":/textures/Resources/textures/IMGP5487_seamless.jpg");
-  m_texture3=new Texture(":/textures/Resources/textures/tilable-IMG_0044-verydark.png");
-  m_texture4=new Texture(":/textures/Resources/textures/water.png");
-
-    int TextureSize = 1024;
+    m_texture->LoadTile(":/textures/Resources/textures/rock02_2.jpg");
+    m_texture->LoadTile(":/textures/Resources/textures/rock01.jpg");
+    m_texture->LoadTile(":/textures/Resources/textures/tilable-IMG_0044-verydark.png");
+    m_texture->LoadTile(":/textures/Resources/textures/water.png");
+    int TextureSize = 1024; // Luôn nhỏ hơn hoặc bằng kích thước của ảnh. nếu lớn hơn thì nó sẽ không lấy được toạ độ điểm ảnh
     m_terrain= new MidpointDispTerrain(CurrentContex,Size,Roughness,MinHeight, MaxHeight);
     m_terrain->SetTextureScale(TextureScale);
-    //m_texture->GenerateTexture(TextureSize, MinHeight, MaxHeight,m_terrain);
+    m_texture->GenerateTexture(TextureSize, MinHeight, MaxHeight,m_terrain);
 }
 void View3D::resizeGL(int w, int h) {
     glViewport(0, 0, (GLsizei)(w), (GLsizei)(h));
@@ -124,12 +108,12 @@ void View3D::paintGL()
 
 
     // Kích hoạt texture và kết nối với texture unit
-    //m_textures->SetToShader(CurrentContex,shaderProgram);
+    m_texture->SetToShader(shaderProgram,"gTerrainTexture");
     //CurrentContex = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_3_3_Core>()
-    m_texture1->SetToShader(shaderProgram,"gTextureHeight0",0);
-    m_texture2->SetToShader(shaderProgram,"gTextureHeight1",1);
-    m_texture3->SetToShader(shaderProgram,"gTextureHeight2",2);
-    m_texture4->SetToShader(shaderProgram,"gTextureHeight3",3);
+//    m_texture1->SetToShader(shaderProgram,"gTextureHeight0",0);
+//    m_texture2->SetToShader(shaderProgram,"gTextureHeight1",1);
+//    m_texture3->SetToShader(shaderProgram,"gTextureHeight2",2);
+//    m_texture4->SetToShader(shaderProgram,"gTextureHeight3",3);
 
 
 
@@ -151,8 +135,5 @@ void View3D::paintGL()
 // m_texture4->TextureI()->bind(3);
 
     m_terrain->Render(DrawType::Triangles, false);
-    m_texture1->TextureI()->release();
-     m_texture2->TextureI()->release();
-      m_texture3->TextureI()->release();
-       m_texture4->TextureI()->release();
+
 }

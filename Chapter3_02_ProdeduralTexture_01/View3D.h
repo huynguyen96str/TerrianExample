@@ -20,7 +20,6 @@
 #include "FaultFormationTerrain.h"
 #include "MidpointDispTerrain.h"
 #include "Opengl/Texture.h"
-#include "Opengl/Texture2.h"
 #include "Opengl/ProceduralTexture.h"
 
 class View3D: public QOpenGLWidget,public QOpenGLFunctions_3_3_Core {
@@ -53,12 +52,6 @@ private:
     // Buffer* m_buffer;
     MidpointDispTerrain* m_terrain;
     ProceduralTexture* m_texture;
-    Texture* m_texture1;
-    Texture* m_texture2;
-    Texture* m_texture3;
-    Texture* m_texture4;
-    Texture* m_textureSingle;
-    Texture2* m_textures;
 };
 
 #endif // VIEW3D_H

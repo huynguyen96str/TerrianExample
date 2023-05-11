@@ -75,23 +75,34 @@ void ProceduralTexture::GenerateTexture(int TextureSize, float MinHeight, float 
             p += 3;
         }
     }
-
-    //    Texture* pTexture = new Texture(GL_TEXTURE_2D);
-    //    stbi_write_png("texture.png", TextureSize, TextureSize, BPP, pTextureData, TextureSize * BPP);
-    //    pTexture->LoadRaw(TextureSize, TextureSize, BPP, pTextureData);
-    //unsigned char* data; // Mảng unsigned char* chứa dữ liệu
-//    int dataSize= TextureSize*TextureSize*3; // Kích thước của mảng dữ liệu
-
     QImage image(pTextureData, TextureSize, TextureSize, QImage::Format_RGB888);
-    bool success = image.save("heightMap.png");
+    image.save("heightMap.png");
     m_texture = new QOpenGLTexture(image);
     free(pTextureData);
+    //
+    m_texture->generateMipMaps(0);
+    SetWrapTexture( QOpenGLTexture::DirectionS,  QOpenGLTexture::Repeat);
+    SetWrapTexture( QOpenGLTexture::DirectionT,  QOpenGLTexture::Repeat);
+    SetFilter(QOpenGLTexture::LinearMipMapLinear,QOpenGLTexture::Linear);
 }
 void ProceduralTexture::SetToShader(QOpenGLShaderProgram& shader,std::string uniformValue, int portNum)
 {
     shader.setUniformValue(uniformValue.c_str(),GL_TEXTURE0 + portNum);
     m_texture->bind(portNum);
 }
+
+void ProceduralTexture::SetWrapTexture(QOpenGLTexture::CoordinateDirection direction, QOpenGLTexture::WrapMode wrapmode)
+{
+    m_texture->setWrapMode(direction, wrapmode);
+}
+
+void ProceduralTexture::SetFilter(QOpenGLTexture::Filter minificationF, QOpenGLTexture::Filter magnifitionF)
+{
+
+   m_texture->setMinificationFilter(minificationF);
+   m_texture->setMagnificationFilter(magnifitionF);
+}
+
 
 void ProceduralTexture::CalculateTextureRegions(float MinHeight, float MaxHeight)
 {
